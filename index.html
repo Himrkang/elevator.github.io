@@ -38,49 +38,63 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
-        .input-section {
+        .input-row {
             display: flex;
             gap: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .input-row:last-child {
+            margin-bottom: 0;
         }
         .input-group {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .input-group label {
             font-weight: bold;
             color: #333;
+            font-size: 16px;
         }
         .input-group input {
-            width: 120px;
-            padding: 8px 12px;
+            width: 130px;
+            padding: 10px 14px;
             border: 2px solid #ddd;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 16px;
             text-align: right;
         }
         .input-group input:focus {
             border-color: #1a73e8;
             outline: none;
         }
-        .scheme-selector {
-            margin: 20px 0;
+        .public-housing-group {
             display: flex;
             align-items: center;
             gap: 10px;
+            background: #fff3cd;
+            padding: 12px 18px;
+            border-radius: 5px;
+            border: 1px solid #ffc107;
         }
-        .scheme-selector label {
+        .public-housing-group label {
             font-weight: bold;
-            color: #333;
+            color: #856404;
+            font-size: 16px;
         }
-        .scheme-selector select {
+        .public-housing-group input {
+            width: 80px;
             padding: 8px 12px;
             border: 2px solid #ddd;
             border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .public-housing-note {
             font-size: 14px;
-            min-width: 200px;
+            color: #856404;
         }
         .result-container {
             background: white;
@@ -88,6 +102,7 @@
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
+            overflow-x: auto;
         }
         .result-title {
             font-size: 18px;
@@ -102,24 +117,32 @@
             border-collapse: collapse;
             margin-top: 10px;
             font-size: 14px;
+            min-width: 650px;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 10px 8px;
+            padding: 6px 4px;
             text-align: center;
+            white-space: nowrap;
         }
         th {
             background: #f0f4ff;
             font-weight: bold;
             color: #333;
+            font-size: 13px;
         }
-        td input {
-            width: 100%;
-            padding: 6px;
+        td input[type="number"] {
+            width: 60px;
+            padding: 4px;
             border: 1px solid #ddd;
             border-radius: 4px;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
+        }
+        td input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
         td input:focus {
             border-color: #1a73e8;
@@ -127,8 +150,30 @@
             background: #f0f4ff;
         }
         .floor-col {
+            background: #e3f2fd;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .room-col {
             background: #fafafa;
             font-weight: bold;
+            font-size: 13px;
+        }
+        .public-floor-col {
+            background: #fff3cd;
+            font-weight: bold;
+            color: #856404;
+            font-size: 13px;
+        }
+        .contribute-col {
+            background: #e8f5e9;
+        }
+        .coeff-col {
+            background: #fffde7;
+        }
+        .no-contribute {
+            background: #ffebee !important;
+            color: #c62828;
         }
         .editable {
             background: #fffde7;
@@ -151,34 +196,37 @@
             color: #4a148c;
             font-weight: bold;
         }
-        .custom-scheme {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-top: 30px;
+        .summary-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
         }
-        .custom-scheme-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #7b1fa2;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .section-label {
-            font-size: 12px;
+        .summary-item .label {
             color: #666;
-            margin: 15px 0 10px 0;
-            padding-left: 10px;
-            border-left: 3px solid #1a73e8;
+            font-size: 14px;
+        }
+        .summary-item .value {
+            font-weight: bold;
+            color: #333;
+        }
+        .no-subsidy {
+            background: #f5f5f5 !important;
+            color: #999;
+        }
+        .public-housing-row {
+            background: #fff8e1 !important;
         }
         @media (max-width: 850px) {
-            .input-section {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .scheme-selector {
+            .input-row {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -188,12 +236,12 @@
 <body>
     <div class="header">
         <h1>东莞市既有住宅增设电梯分摊计算器</h1>
-        <p>《东莞市既有住宅增设电梯管理办法（修订）》 本办法自 2021 年 5 月 3 日施行，有效期至2026 年 5 月 2 日。</p>
+        <p>《东莞市既有住宅增设电梯管理办法（修订）》 本办法自 2021 年 5 月 3 日施行，有效期至2026 年 5 月 2 日</p>
     </div>
 
     <div class="input-container">
         <h2>输入参数</h2>
-        <div class="input-section">
+        <div class="input-row">
             <div class="input-group">
                 <label>总价(元):</label>
                 <input type="number" id="total" value="450000" onchange="updateResults()">
@@ -203,517 +251,400 @@
                 <input type="number" id="subsidy" value="200000" onchange="updateResults()">
             </div>
         </div>
-        
-        <div class="scheme-selector">
-            <label>选择方案:</label>
-            <select id="scheme-select" onchange="updateResults()">
-                <option value="1">方案一（基础方案）</option>
-                <option value="2">方案二（2层不出，按文件推荐系数分摊）</option>
-            </select>
-            <button onclick="updateResults()" style="padding: 8px 16px; background: #7e57c2; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">查询结果</button>
+        <div class="input-row">
+            <div class="public-housing-group">
+                <label>海关公房分摊系数:</label>
+                <input type="number" step="0.1" id="publicCoeff" value="1.6" onchange="updateResults()">
+                <span>/</span>
+                <input type="number" step="0.1" id="totalCoeff" value="9.6" onchange="updateResults()">
+                <span class="public-housing-note">参考市文件、2栋1单元做法</span>
+            </div>
         </div>
     </div>
 
     <div class="result-container">
-        <div class="result-title" id="result-title">方案一（基础方案）结果</div>
+        <div class="result-title">电梯分摊计算结果</div>
         <table id="result-table">
             <thead>
                 <tr>
                     <th>楼层</th>
+                    <th>房号</th>
+                    <th>是否出资</th>
                     <th>分摊系数</th>
-                    <th>楼层分摊金额(元)</th>
-                    <th class="highlight-col-header">每户分摊金额(元)</th>
-                    <th>楼层补贴金额(元)</th>
-                    <th class="highlight-col-header">每户扣除补贴后实付金额(元)</th>
-                    <th>9层不出资每户垫付金额</th>
-                    <th>9层不出资每户额外补贴金额</th>
-                    <th class="highlight-col-header">最终每户实付金额(元)</th>
+                    <th>分摊金额(元)</th>
+                    <th>补贴金额(元)</th>
+                    <th class="highlight-col-header">应付金额</th>
+                    <th>每户垫付公房金额</th>
+                    <th>海关公房补贴</th>
+                    <th class="highlight-col-header">实付金额(元)</th>
                 </tr>
             </thead>
             <tbody>
                 <tr data-floor="2">
-                    <td class="floor-col">2</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="0.5" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                    <td class="floor-col" rowspan="2">2层</td>
+                    <td class="room-col">205</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="205" onchange="updateResults()"></td>
+                    <td class="coeff-col" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="2" value="" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="205"></td>
+                    <td class="subsidy-cell" data-room="205"></td>
+                    <td class="payable-cell highlight-col" data-room="205"></td>
+                    <td class="public-advance-cell" data-room="205"></td>
+                    <td class="public-subsidy-cell" data-room="205"></td>
+                    <td class="final-cell highlight-col" data-room="205"></td>
+                </tr>
+                <tr data-floor="2">
+                    <td class="room-col">206</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="206" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="206"></td>
+                    <td class="subsidy-cell" data-room="206"></td>
+                    <td class="payable-cell highlight-col" data-room="206"></td>
+                    <td class="public-advance-cell" data-room="206"></td>
+                    <td class="public-subsidy-cell" data-room="206"></td>
+                    <td class="final-cell highlight-col" data-room="206"></td>
                 </tr>
                 <tr data-floor="3">
-                    <td class="floor-col">3</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                    <td class="floor-col" rowspan="2">3层</td>
+                    <td class="room-col">305</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="305" checked onchange="updateResults()"></td>
+                    <td class="coeff-col" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="3" value="2" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="305"></td>
+                    <td class="subsidy-cell" data-room="305"></td>
+                    <td class="payable-cell highlight-col" data-room="305"></td>
+                    <td class="public-advance-cell" data-room="305"></td>
+                    <td class="public-subsidy-cell" data-room="305"></td>
+                    <td class="final-cell highlight-col" data-room="305"></td>
+                </tr>
+                <tr data-floor="3">
+                    <td class="room-col">306</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="306" checked onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="306"></td>
+                    <td class="subsidy-cell" data-room="306"></td>
+                    <td class="payable-cell highlight-col" data-room="306"></td>
+                    <td class="public-advance-cell" data-room="306"></td>
+                    <td class="public-subsidy-cell" data-room="306"></td>
+                    <td class="final-cell highlight-col" data-room="306"></td>
                 </tr>
                 <tr data-floor="4">
-                    <td class="floor-col">4</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.1" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                    <td class="floor-col" rowspan="2">4层</td>
+                    <td class="room-col">405</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="405" checked onchange="updateResults()"></td>
+                    <td class="coeff-col" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="4" value="3" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="405"></td>
+                    <td class="subsidy-cell" data-room="405"></td>
+                    <td class="payable-cell highlight-col" data-room="405"></td>
+                    <td class="public-advance-cell" data-room="405"></td>
+                    <td class="public-subsidy-cell" data-room="405"></td>
+                    <td class="final-cell highlight-col" data-room="405"></td>
+                </tr>
+                <tr data-floor="4">
+                    <td class="room-col">406</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="406" checked onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="406"></td>
+                    <td class="subsidy-cell" data-room="406"></td>
+                    <td class="payable-cell highlight-col" data-room="406"></td>
+                    <td class="public-advance-cell" data-room="406"></td>
+                    <td class="public-subsidy-cell" data-room="406"></td>
+                    <td class="final-cell highlight-col" data-room="406"></td>
                 </tr>
                 <tr data-floor="5">
-                    <td class="floor-col">5</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.2" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                    <td class="floor-col" rowspan="2">5层</td>
+                    <td class="room-col">505</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="505" checked onchange="updateResults()"></td>
+                    <td class="coeff-col" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="5" value="4" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="505"></td>
+                    <td class="subsidy-cell" data-room="505"></td>
+                    <td class="payable-cell highlight-col" data-room="505"></td>
+                    <td class="public-advance-cell" data-room="505"></td>
+                    <td class="public-subsidy-cell" data-room="505"></td>
+                    <td class="final-cell highlight-col" data-room="505"></td>
+                </tr>
+                <tr data-floor="5">
+                    <td class="room-col">506</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="506" checked onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="506"></td>
+                    <td class="subsidy-cell" data-room="506"></td>
+                    <td class="payable-cell highlight-col" data-room="506"></td>
+                    <td class="public-advance-cell" data-room="506"></td>
+                    <td class="public-subsidy-cell" data-room="506"></td>
+                    <td class="final-cell highlight-col" data-room="506"></td>
                 </tr>
                 <tr data-floor="6">
-                    <td class="floor-col">6</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.3" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                    <td class="floor-col" rowspan="2">6层</td>
+                    <td class="room-col">605</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="605" checked onchange="updateResults()"></td>
+                    <td class="coeff-col" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="6" value="5" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="605"></td>
+                    <td class="subsidy-cell" data-room="605"></td>
+                    <td class="payable-cell highlight-col" data-room="605"></td>
+                    <td class="public-advance-cell" data-room="605"></td>
+                    <td class="public-subsidy-cell" data-room="605"></td>
+                    <td class="final-cell highlight-col" data-room="605"></td>
+                </tr>
+                <tr data-floor="6">
+                    <td class="room-col">606</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="606" checked onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="606"></td>
+                    <td class="subsidy-cell" data-room="606"></td>
+                    <td class="payable-cell highlight-col" data-room="606"></td>
+                    <td class="public-advance-cell" data-room="606"></td>
+                    <td class="public-subsidy-cell" data-room="606"></td>
+                    <td class="final-cell highlight-col" data-room="606"></td>
                 </tr>
                 <tr data-floor="7">
-                    <td class="floor-col">7</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.4" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                    <td class="floor-col" rowspan="2">7层</td>
+                    <td class="room-col">705</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="705" checked onchange="updateResults()"></td>
+                    <td class="coeff-col" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="7" value="6" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="705"></td>
+                    <td class="subsidy-cell" data-room="705"></td>
+                    <td class="payable-cell highlight-col" data-room="705"></td>
+                    <td class="public-advance-cell" data-room="705"></td>
+                    <td class="public-subsidy-cell" data-room="705"></td>
+                    <td class="final-cell highlight-col" data-room="705"></td>
+                </tr>
+                <tr data-floor="7">
+                    <td class="room-col">706</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="706" checked onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="706"></td>
+                    <td class="subsidy-cell" data-room="706"></td>
+                    <td class="payable-cell highlight-col" data-room="706"></td>
+                    <td class="public-advance-cell" data-room="706"></td>
+                    <td class="public-subsidy-cell" data-room="706"></td>
+                    <td class="final-cell highlight-col" data-room="706"></td>
                 </tr>
                 <tr data-floor="8">
-                    <td class="floor-col">8</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.5" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                    <td class="floor-col" rowspan="2">8层</td>
+                    <td class="room-col">805</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="805" checked onchange="updateResults()"></td>
+                    <td class="coeff-col" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="8" value="7" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="805"></td>
+                    <td class="subsidy-cell" data-room="805"></td>
+                    <td class="payable-cell highlight-col" data-room="805"></td>
+                    <td class="public-advance-cell" data-room="805"></td>
+                    <td class="public-subsidy-cell" data-room="805"></td>
+                    <td class="final-cell highlight-col" data-room="805"></td>
                 </tr>
-                <tr data-floor="9">
-                    <td class="floor-col">9</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.6" data-scheme="1" onchange="updateResults()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
+                <tr data-floor="8">
+                    <td class="room-col">806</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="806" checked onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="806"></td>
+                    <td class="subsidy-cell" data-room="806"></td>
+                    <td class="payable-cell highlight-col" data-room="806"></td>
+                    <td class="public-advance-cell" data-room="806"></td>
+                    <td class="public-subsidy-cell" data-room="806"></td>
+                    <td class="final-cell highlight-col" data-room="806"></td>
+                </tr>
+                <tr data-floor="9" class="public-housing-row">
+                    <td class="public-floor-col" rowspan="2">9层</td>
+                    <td class="public-floor-col">905</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="905" checked onchange="updateResults()"></td>
+                    <td class="coeff-col public-housing-row" rowspan="2"><input type="number" step="0.1" class="editable coeff-input" data-floor="9" value="1.6" onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="905"></td>
+                    <td class="subsidy-cell" data-room="905"></td>
+                    <td class="payable-cell highlight-col" data-room="905"></td>
+                    <td class="public-advance-cell" data-room="905"></td>
+                    <td class="public-subsidy-cell" data-room="905"></td>
+                    <td class="final-cell highlight-col" data-room="905"></td>
+                </tr>
+                <tr data-floor="9" class="public-housing-row">
+                    <td class="public-floor-col">906</td>
+                    <td class="contribute-col"><input type="checkbox" class="contribute-checkbox" data-room="906" checked onchange="updateResults()"></td>
+                    <td class="amount-cell" data-room="906"></td>
+                    <td class="subsidy-cell" data-room="906"></td>
+                    <td class="payable-cell highlight-col" data-room="906"></td>
+                    <td class="public-advance-cell" data-room="906"></td>
+                    <td class="public-subsidy-cell" data-room="906"></td>
+                    <td class="final-cell highlight-col" data-room="906"></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr class="total-row">
-                    <td colspan="2">总系数</td>
-                    <td id="result-coeff"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="4">合计（扣除公房分摊费用）</td>
+                    <td id="total-amount"></td>
+                    <td id="total-subsidy"></td>
+                    <td id="total-payable"></td>
+                    <td id="total-public-advance"></td>
+                    <td id="total-public-subsidy"></td>
+                    <td id="total-final"></td>
+                </tr>
+                <tr class="total-row" style="background: #fff3cd;">
+                    <td colspan="4">海关公房分摊费用(元)</td>
+                    <td id="public-housing-amount"></td>
+                    <td id="public-housing-subsidy"></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
                 </tr>
             </tfoot>
         </table>
-    </div>
-
-    <div class="custom-scheme">
-        <div class="custom-scheme-title">自选方案</div>
-        <div class="input-section">
-            <div class="input-group">
-                <label>总价(元):</label>
-                <input type="number" id="custom_total" value="450000" onchange="calculateCustomScheme()">
+        
+        <div class="summary-box">
+            <div class="summary-item">
+                <span class="label">总户数:</span>
+                <span class="value" id="total-households">16</span>
             </div>
-            <div class="input-group">
-                <label>补贴金额(元):</label>
-                <input type="number" id="custom_subsidy" value="200000" onchange="calculateCustomScheme()">
+            <div class="summary-item">
+                <span class="label">出资户数:</span>
+                <span class="value" id="contributing-households">0</span>
             </div>
-            <button onclick="calculateCustomScheme()" style="padding: 8px 16px; background: #7e57c2; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">查询结果</button>
+            <div class="summary-item">
+                <span class="label">不出资户数:</span>
+                <span class="value" id="non-contributing-households">16</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">公房系数:</span>
+                <span class="value" id="display-public-coeff">1.6/9.6</span>
+            </div>
         </div>
-        <div class="section-label">楼层分摊系数（可编辑）</div>
-        <table id="custom-table">
-            <thead>
-                <tr>
-                    <th>楼层</th>
-                    <th>分摊系数</th>
-                    <th>楼层分摊金额(元)</th>
-                    <th class="highlight-col-header">每户分摊金额(元)</th>
-                    <th>楼层补贴金额(元)</th>
-                    <th class="highlight-col-header">每户扣除补贴后实付金额(元)</th>
-                    <th>9层不出资每户垫付金额</th>
-                    <th>9层不出资每户额外补贴金额</th>
-                    <th class="highlight-col-header">最终每户实付金额(元)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-floor="2">
-                    <td class="floor-col">2</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="0" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="3">
-                    <td class="floor-col">3</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="4">
-                    <td class="floor-col">4</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.1" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="5">
-                    <td class="floor-col">5</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.2" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="6">
-                    <td class="floor-col">6</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.3" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="7">
-                    <td class="floor-col">7</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.4" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="8">
-                    <td class="floor-col">8</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.5" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="9">
-                    <td class="floor-col">9</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.6" data-scheme="custom" onchange="calculateCustomScheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr class="total-row">
-                    <td colspan="2">总系数</td>
-                    <td id="custom-coeff"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-
-    <div class="custom-scheme">
-        <div class="custom-scheme-title">自选方案二</div>
-        <div class="input-section">
-            <div class="input-group">
-                <label>总价(元):</label>
-                <input type="number" id="custom2_total" value="450000" onchange="calculateCustom2Scheme()">
-            </div>
-            <div class="input-group">
-                <label>补贴金额(元):</label>
-                <input type="number" id="custom2_subsidy" value="200000" onchange="calculateCustom2Scheme()">
-            </div>
-            <button onclick="calculateCustom2Scheme()" style="padding: 8px 16px; background: #7e57c2; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">查询结果</button>
-        </div>
-        <div class="section-label">楼层分摊系数（可编辑）</div>
-        <table id="custom2-table">
-            <thead>
-                <tr>
-                    <th>楼层</th>
-                    <th>分摊系数</th>
-                    <th>楼层分摊金额(元)</th>
-                    <th class="highlight-col-header">每户分摊金额(元)</th>
-                    <th>楼层补贴金额(元)</th>
-                    <th class="highlight-col-header">每户扣除补贴后实付金额(元)</th>
-                    <th>9层不出资每户垫付金额</th>
-                    <th>9层不出资每户额外补贴金额</th>
-                    <th class="highlight-col-header">最终每户实付金额(元)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-floor="2">
-                    <td class="floor-col">2</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="0" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="3">
-                    <td class="floor-col">3</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="4">
-                    <td class="floor-col">4</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.1" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="5">
-                    <td class="floor-col">5</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.2" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="6">
-                    <td class="floor-col">6</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.3" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="7">
-                    <td class="floor-col">7</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.4" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="8">
-                    <td class="floor-col">8</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.5" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-                <tr data-floor="9">
-                    <td class="floor-col">9</td>
-                    <td><input type="number" step="0.1" class="editable coeff-input" value="1.6" data-scheme="custom2" onchange="calculateCustom2Scheme()"></td>
-                    <td class="floor-amount"></td>
-                    <td class="per-house-amount highlight-col"></td>
-                    <td class="floor-subsidy"></td>
-                    <td class="per-house-final highlight-col"></td>
-                    <td class="nine-floor-amount-distribution"></td>
-                    <td class="nine-floor-subsidy-distribution"></td>
-                    <td class="final-per-house-amount highlight-col"></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr class="total-row">
-                    <td colspan="2">总系数</td>
-                    <td id="custom2-coeff"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
     </div>
 
     <script>
-        // 方案系数配置
-        const schemeCoefficients = {
-            1: [0.5, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6], // 方案一
-            2: [0, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6]  // 方案二：2层不出，按文件推荐系数分摊
-        };
-
-        // 方案标题
-        const schemeTitles = {
-            1: "方案一（基础方案）结果",
-            2: "方案二（2层不出，按文件推荐系数分摊）结果"
-        };
-
         function formatNumber(num) {
             return Math.round(num * 100) / 100;
         }
 
         function updateResults() {
-            const selectedScheme = document.getElementById('scheme-select').value;
             const total = parseFloat(document.getElementById('total').value) || 0;
             const subsidy = parseFloat(document.getElementById('subsidy').value) || 0;
+            const publicCoeff = parseFloat(document.getElementById('publicCoeff').value) || 0;
+            const totalCoeff = parseFloat(document.getElementById('totalCoeff').value) || 1;
             
-            // 更新结果标题
-            document.getElementById('result-title').textContent = schemeTitles[selectedScheme];
-            
-            // 更新系数输入框
-            const table = document.getElementById('result-table');
-            const rows = table.querySelectorAll('tbody tr');
-            rows.forEach((row, index) => {
-                const coeffInput = row.querySelector('.coeff-input');
-                coeffInput.value = schemeCoefficients[selectedScheme][index];
-                coeffInput.dataset.scheme = selectedScheme;
-            });
-            
-            // 计算结果
-            calculateScheme('result', total, subsidy);
-        }
+            document.getElementById('display-public-coeff').textContent = publicCoeff + '/' + totalCoeff;
 
-        function calculateScheme(tableId, total, subsidy) {
-            const table = document.getElementById(tableId + '-table');
-            const rows = table.querySelectorAll('tbody tr');
-            const coeffs = [];
-            
-            rows.forEach(row => {
-                const coeffInput = row.querySelector('.coeff-input');
-                coeffs.push(parseFloat(coeffInput.value) || 0);
+            const floorCoeffs = {};
+            document.querySelectorAll('.coeff-input').forEach(input => {
+                floorCoeffs[input.dataset.floor] = parseFloat(input.value) || 0;
             });
+
+            const contributeStatus = {};
+            document.querySelectorAll('.contribute-checkbox').forEach(checkbox => {
+                contributeStatus[checkbox.dataset.room] = checkbox.checked;
+            });
+
+            const rooms = ['205', '206', '305', '306', '405', '406', '505', '506', '605', '606', '705', '706', '805', '806', '905', '906'];
+            const publicHousingRooms = ['905', '906'];
+
+            const coeffs = rooms.map(room => {
+                const floor = room.substring(0, 1);
+                return floorCoeffs[floor] || 0;
+            });
+
+            const contributes = rooms.map(room => contributeStatus[room]);
+            const isPublicHousing = rooms.map(room => publicHousingRooms.includes(room));
+
+            const publicHousingAmount = total * (publicCoeff / totalCoeff);
+            const publicHousingSubsidy = subsidy * (publicCoeff / totalCoeff);
+            const adjustedTotal = total - publicHousingAmount;
+            const adjustedSubsidy = subsidy - publicHousingSubsidy;
+
+            const contributingIndices = [];
+            const contributingCoeffs = [];
             
-            const totalCoeff = coeffs.reduce((a, b) => a + b, 0);
-            const floorAmounts = coeffs.map(c => totalCoeff > 0 ? (total / totalCoeff) * c : 0);
-            const floorSubsidies = coeffs.map(c => totalCoeff > 0 ? (subsidy / totalCoeff) * c : 0);
-            
-            // 计算9层的分摊金额和补贴金额
-            const nineFloorAmount = floorAmounts[7]; // 9层的分摊金额
-            const nineFloorSubsidy = floorSubsidies[7]; // 9层的补贴金额
-            
-            // 计算2-8层的总系数（不包括9层）
-            const coeffWithoutFloor9 = coeffs.slice(0, 7).reduce((a, b) => a + b, 0);
-            
-            // 计算9层分摊金额和补贴金额按系数分配到2-8层
-            const nineFloorAmountDistribution = coeffs.slice(0, 7).map(c => 
-                coeffWithoutFloor9 > 0 ? (nineFloorAmount / coeffWithoutFloor9) * c : 0
-            );
-            const nineFloorSubsidyDistribution = coeffs.slice(0, 7).map(c => 
-                coeffWithoutFloor9 > 0 ? (nineFloorSubsidy / coeffWithoutFloor9) * c : 0
-            );
-            
-            document.getElementById(tableId + '-coeff').textContent = formatNumber(totalCoeff);
-            
-            rows.forEach((row, i) => {
-                const cells = row.querySelectorAll('td');
-                cells[2].textContent = formatNumber(floorAmounts[i]);
-                cells[3].textContent = formatNumber(floorAmounts[i] / 2);
-                cells[4].textContent = formatNumber(floorSubsidies[i]);
-                cells[5].textContent = formatNumber((floorAmounts[i] - floorSubsidies[i]) / 2);
-                
-                // 9层分摊金额和补贴金额分配（2-8层）
-                if (i < 7) {
-                    const amountDistribution = nineFloorAmountDistribution[i] / 2;
-                    const subsidyDistribution = nineFloorSubsidyDistribution[i] / 2;
-                    cells[6].textContent = formatNumber(amountDistribution);
-                    cells[7].textContent = formatNumber(subsidyDistribution);
-                    // 最终每户实付金额 = 每户扣除补贴后实付金额 + 9层分摊金额分配 - 9层补贴金额分配
-                    cells[8].textContent = formatNumber(
-                        (floorAmounts[i] - floorSubsidies[i]) / 2 + 
-                        amountDistribution - 
-                        subsidyDistribution
-                    );
-                } else {
-                    // 9层没有分配
-                    cells[6].textContent = '-';
-                    cells[7].textContent = '-';
-                    cells[8].textContent = '-';
+            coeffs.forEach((coeff, i) => {
+                if (contributes[i] && !isPublicHousing[i]) {
+                    contributingIndices.push(i);
+                    contributingCoeffs.push(coeff);
                 }
             });
-        }
 
-        function calculateCustomScheme() {
-            const total = parseFloat(document.getElementById('custom_total').value) || 0;
-            const subsidy = parseFloat(document.getElementById('custom_subsidy').value) || 0;
-            calculateScheme('custom', total, subsidy);
-        }
+            const totalContributingCoeff = contributingCoeffs.reduce((a, b) => a + b, 0);
 
-        function calculateCustom2Scheme() {
-            const total = parseFloat(document.getElementById('custom2_total').value) || 0;
-            const subsidy = parseFloat(document.getElementById('custom2_subsidy').value) || 0;
-            calculateScheme('custom2', total, subsidy);
+            let totalFinal = 0;
+            let totalPayable = 0;
+            let totalPublicAdvance = 0;
+            let totalPublicSubsidy = 0;
+            let contributingCount = 0;
+            
+            rooms.forEach((room, i) => {
+                const amountCell = document.querySelector(`.amount-cell[data-room="${room}"]`);
+                const subsidyCell = document.querySelector(`.subsidy-cell[data-room="${room}"]`);
+                const payableCell = document.querySelector(`.payable-cell[data-room="${room}"]`);
+                const publicAdvanceCell = document.querySelector(`.public-advance-cell[data-room="${room}"]`);
+                const publicSubsidyCell = document.querySelector(`.public-subsidy-cell[data-room="${room}"]`);
+                const finalCell = document.querySelector(`.final-cell[data-room="${room}"]`);
+                const row = amountCell.closest('tr');
+                
+                if (isPublicHousing[i]) {
+                    const publicShare = total * (coeffs[i] / totalCoeff);
+                    const publicSubShare = subsidy * (coeffs[i] / totalCoeff);
+                    
+                    amountCell.textContent = formatNumber(publicShare);
+                    amountCell.classList.add('no-subsidy');
+                    subsidyCell.textContent = formatNumber(publicSubShare);
+                    subsidyCell.classList.add('no-subsidy');
+                    payableCell.textContent = '-';
+                    payableCell.classList.add('no-subsidy');
+                    publicAdvanceCell.textContent = '-';
+                    publicAdvanceCell.classList.add('no-subsidy');
+                    publicSubsidyCell.textContent = '-';
+                    publicSubsidyCell.classList.add('no-subsidy');
+                    finalCell.textContent = '0';
+                    finalCell.classList.add('no-subsidy');
+                    row.classList.add('no-contribute');
+                } else if (contributes[i]) {
+                    const amount = (adjustedTotal * coeffs[i]) / totalContributingCoeff;
+                    const sub = (adjustedSubsidy * coeffs[i]) / totalContributingCoeff;
+                    const payable = amount - sub;
+                    const publicAdvance = publicHousingAmount * (coeffs[i] / totalContributingCoeff);
+                    const publicSub = publicHousingSubsidy * (coeffs[i] / totalContributingCoeff);
+                    const final = payable + publicAdvance - publicSub;
+                    
+                    amountCell.textContent = formatNumber(amount);
+                    amountCell.classList.remove('no-subsidy');
+                    subsidyCell.textContent = formatNumber(sub);
+                    subsidyCell.classList.remove('no-subsidy');
+                    payableCell.textContent = formatNumber(payable);
+                    payableCell.classList.remove('no-subsidy');
+                    publicAdvanceCell.textContent = formatNumber(publicAdvance);
+                    publicAdvanceCell.classList.remove('no-subsidy');
+                    publicSubsidyCell.textContent = formatNumber(publicSub);
+                    publicSubsidyCell.classList.remove('no-subsidy');
+                    finalCell.textContent = formatNumber(final);
+                    finalCell.classList.remove('no-subsidy');
+                    row.classList.remove('no-contribute');
+                    
+                    totalPayable += payable;
+                    totalPublicAdvance += publicAdvance;
+                    totalPublicSubsidy += publicSub;
+                    totalFinal += final;
+                    contributingCount++;
+                } else {
+                    amountCell.textContent = '不出资';
+                    amountCell.classList.add('no-subsidy');
+                    subsidyCell.textContent = '不享受';
+                    subsidyCell.classList.add('no-subsidy');
+                    payableCell.textContent = '0';
+                    payableCell.classList.add('no-subsidy');
+                    publicAdvanceCell.textContent = '-';
+                    publicAdvanceCell.classList.add('no-subsidy');
+                    publicSubsidyCell.textContent = '-';
+                    publicSubsidyCell.classList.add('no-subsidy');
+                    finalCell.textContent = '0';
+                    finalCell.classList.add('no-subsidy');
+                    row.classList.add('no-contribute');
+                }
+            });
+
+            document.getElementById('total-amount').textContent = formatNumber(adjustedTotal);
+            document.getElementById('total-subsidy').textContent = formatNumber(adjustedSubsidy);
+            document.getElementById('total-payable').textContent = formatNumber(totalPayable);
+            document.getElementById('total-public-advance').textContent = formatNumber(totalPublicAdvance);
+            document.getElementById('total-public-subsidy').textContent = formatNumber(totalPublicSubsidy);
+            document.getElementById('total-final').textContent = formatNumber(totalFinal);
+            document.getElementById('public-housing-amount').textContent = formatNumber(publicHousingAmount);
+            document.getElementById('public-housing-subsidy').textContent = formatNumber(publicHousingSubsidy);
+
+            const totalHouseholds = rooms.length;
+            const nonContributingHouseholds = totalHouseholds - contributingCount;
+
+            document.getElementById('total-households').textContent = totalHouseholds;
+            document.getElementById('contributing-households').textContent = contributingCount;
+            document.getElementById('non-contributing-households').textContent = nonContributingHouseholds;
         }
 
         window.onload = function() {
             updateResults();
-            calculateCustomScheme();
-            calculateCustom2Scheme();
         };
     </script>
 </body>
