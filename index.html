@@ -231,6 +231,125 @@
                 align-items: flex-start;
             }
         }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .header p {
+                font-size: 12px;
+            }
+            
+            .input-container {
+                padding: 15px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .input-group input {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .public-housing-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .public-housing-group input {
+                width: 100%;
+                max-width: 80px;
+            }
+            
+            .result-container {
+                padding: 15px;
+            }
+            
+            table {
+                font-size: 12px;
+                min-width: 600px;
+            }
+            
+            th, td {
+                padding: 4px 2px;
+            }
+            
+            td input[type="number"] {
+                width: 50px;
+                font-size: 12px;
+            }
+            
+            .summary-box {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .input-container {
+                padding: 10px;
+            }
+            
+            .result-container {
+                padding: 10px;
+            }
+            
+            table {
+                font-size: 11px;
+                min-width: 500px;
+            }
+            
+            th, td {
+                padding: 3px 2px;
+            }
+            
+            td input[type="number"] {
+                width: 45px;
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            table {
+                min-width: 450px;
+            }
+            
+            .header h1 {
+                font-size: 16px;
+            }
+            
+            .input-group input {
+                max-width: 150px;
+            }
+        }
+        
+        @supports (width: 100dvw) {
+            @media (max-width: 480px) {
+                body {
+                    font-size: 14px;
+                }
+            }
+        }
     </style>
 </head>
 <body>
