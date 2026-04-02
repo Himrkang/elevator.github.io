@@ -557,9 +557,9 @@
                     <td class="public-floor-col" rowspan="2">9层</td>
                     <td class="public-floor-col">905</td>
                     <td class="contribute-col">- (由出资各层分摊)</td>
-                    <td class="coeff-col public-housing-row" rowspan="2"><input type="number" step="0.1" class="editable default-coeff-input" data-floor="9" value="1.6" onchange="updateResults()"></td>
-                    <td class="amount-cell" data-room="905"></td>
-                    <td class="subsidy-cell" data-room="905"></td>
+                    <td class="coeff-col public-housing-row" rowspan="2">-</td>
+                    <td class="amount-cell" data-room="905">(由出资各层分摊)</td>
+                    <td class="subsidy-cell" data-room="905">(由出资各层分摊)</td>
                     <td class="payable-cell highlight-col" data-room="905"></td>
                     <td class="public-advance-cell" data-room="905"></td>
                     <td class="public-subsidy-cell" data-room="905"></td>
@@ -568,8 +568,8 @@
                 <tr data-floor="9" class="public-housing-row">
                     <td class="public-floor-col">906</td>
                     <td class="contribute-col">- (由出资各层分摊)</td>
-                    <td class="amount-cell" data-room="906"></td>
-                    <td class="subsidy-cell" data-room="906"></td>
+                    <td class="amount-cell" data-room="906">(由出资各层分摊)</td>
+                    <td class="subsidy-cell" data-room="906">(由出资各层分摊)</td>
                     <td class="payable-cell highlight-col" data-room="906"></td>
                     <td class="public-advance-cell" data-room="906"></td>
                     <td class="public-subsidy-cell" data-room="906"></td>
@@ -794,9 +794,9 @@
                     <td class="public-floor-col" rowspan="2">9层</td>
                     <td class="public-floor-col">905</td>
                     <td class="contribute-col">- (由出资各层分摊)</td>
-                    <td class="coeff-col public-housing-row" rowspan="2"><input type="number" step="0.1" class="editable custom-coeff-input" data-floor="9" value="1.6" onchange="updateResults()"></td>
-                    <td class="amount-cell" data-room="905"></td>
-                    <td class="subsidy-cell" data-room="905"></td>
+                    <td class="coeff-col public-housing-row" rowspan="2">-</td>
+                    <td class="amount-cell" data-room="905">(由出资各层分摊)</td>
+                    <td class="subsidy-cell" data-room="905">(由出资各层分摊)</td>
                     <td class="payable-cell highlight-col" data-room="905"></td>
                     <td class="public-advance-cell" data-room="905"></td>
                     <td class="public-subsidy-cell" data-room="905"></td>
@@ -805,8 +805,8 @@
                 <tr data-floor="9" class="public-housing-row">
                     <td class="public-floor-col">906</td>
                     <td class="contribute-col">- (由出资各层分摊)</td>
-                    <td class="amount-cell" data-room="906"></td>
-                    <td class="subsidy-cell" data-room="906"></td>
+                    <td class="amount-cell" data-room="906">(由出资各层分摊)</td>
+                    <td class="subsidy-cell" data-room="906">(由出资各层分摊)</td>
                     <td class="payable-cell highlight-col" data-room="906"></td>
                     <td class="public-advance-cell" data-room="906"></td>
                     <td class="public-subsidy-cell" data-room="906"></td>
@@ -922,12 +922,9 @@
                 const row = amountCell.closest('tr');
                 
                 if (isPublicHousing[i]) {
-                    const publicShare = total * (coeffs[i] / totalCoeff);
-                    const publicSubShare = subsidy * (coeffs[i] / totalCoeff);
-                    
-                    amountCell.textContent = formatNumber(publicShare);
+                    amountCell.textContent = '(由出资各层分摊)';
                     amountCell.classList.add('no-subsidy');
-                    subsidyCell.textContent = formatNumber(publicSubShare);
+                    subsidyCell.textContent = '(由出资各层分摊)';
                     subsidyCell.classList.add('no-subsidy');
                     payableCell.textContent = '-';
                     payableCell.classList.add('no-subsidy');
